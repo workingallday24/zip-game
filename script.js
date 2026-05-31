@@ -8,77 +8,112 @@ const layout = [
 
 ]
 
-const grid =
-document.getElementById(
-"grid"
-)
+const grid = document.getElementById("grid")
 
 let current=[0,0]
 
+let visited=["0-0"]
+
 let seconds=0
 
-setInterval(()=>{
+let gameOver=false
+
+
+const timer = setInterval(()=>{
+
+if(gameOver) return
 
 seconds++
 
-document
-.getElementById(
+document.getElementById(
 "timer"
-)
+).innerText=
 
-.innerText=
 seconds+"s"
 
 },1000)
+
 
 
 function draw(){
 
 grid.innerHTML=""
 
-layout.forEach(
-(row,r)=>{
+layout.forEach((row,r)=>{
 
-row.forEach(
-(cell,c)=>{
+row.forEach((cell,c)=>{
 
 const div=
+
 document.createElement(
 "div"
 )
 
-div.className=
-"cell"
+div.className="cell"
 
-if(cell==="X")
+
+if(cell==="X"){
+
 div.classList.add(
 "block"
 )
 
+}
+
+
+const key=
+
+r+"-"+c
+
+
 if(
-r===current[0]
-&&
-c===current[1]
-)
+visited.includes(key)
+){
 
 div.classList.add(
 "selected"
 )
 
+}
+
+
+if(
+
+r===current[0]
+
+&&
+
+c===current[1]
+
+){
+
+div.style.border=
+
+"4px solid blue"
+
+}
+
+
 div.innerText=
 
 cell==="S"
+
 ?"🟢"
 
 :
 
 cell==="E"
+
 ?"🔒"
 
 :""
 
+
+
 div.onclick=
+
 ()=>move(r,c)
+
 
 grid.appendChild(div)
 
@@ -88,13 +123,25 @@ grid.appendChild(div)
 
 }
 
+
+
 function move(r,c){
 
+if(gameOver) return
+
+
 if(
-layout[r][c]==="X"
-)
+
+layout[r][c]
+
+==="X"
+
+){
 
 return
+
+}
+
 
 const distance=
 
@@ -108,18 +155,48 @@ Math.abs(
 c-current[1]
 )
 
-if(distance!==1)
+
+if(
+distance!==1
+){
 
 return
+
+}
+
+
+const key=
+
+r+"-"+c
+
+
+if(
+visited.includes(key)
+){
+
+return
+
+}
+
+
+visited.push(key)
 
 current=[r,c]
 
 draw()
 
+
 if(
+
 layout[r][c]
+
 ==="E"
+
 ){
+
+gameOver=true
+
+clearInterval(timer)
 
 document
 .getElementById(
@@ -128,20 +205,27 @@ document
 
 .innerText=
 
-"YOU WON IN "
+"🏆 Solved in "
+
 +
+
 seconds
+
 +
+
 " seconds"
 
 }
 
 }
 
+
+
 function resetGame(){
 
 location.reload()
 
 }
+
 
 draw()
