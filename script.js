@@ -18,10 +18,21 @@ let seconds=0
 
 let gameOver=false
 
+let timer=null
 
-const timer = setInterval(()=>{
 
-if(gameOver) return
+
+function startTimer(){
+
+timer=setInterval(()=>{
+
+if(gameOver){
+
+clearInterval(timer)
+
+return
+
+}
 
 seconds++
 
@@ -32,6 +43,8 @@ document.getElementById(
 seconds+"s"
 
 },1000)
+
+}
 
 
 
@@ -51,7 +64,6 @@ document.createElement(
 
 div.className="cell"
 
-
 if(cell==="X"){
 
 div.classList.add(
@@ -60,11 +72,7 @@ div.classList.add(
 
 }
 
-
-const key=
-
-r+"-"+c
-
+const key=r+"-"+c
 
 if(
 visited.includes(key)
@@ -76,44 +84,31 @@ div.classList.add(
 
 }
 
-
 if(
-
 r===current[0]
-
 &&
-
 c===current[1]
-
 ){
 
 div.style.border=
-
 "4px solid blue"
 
 }
 
-
 div.innerText=
 
 cell==="S"
-
 ?"🟢"
 
 :
 
 cell==="E"
-
 ?"🔒"
 
 :""
 
-
-
 div.onclick=
-
 ()=>move(r,c)
-
 
 grid.appendChild(div)
 
@@ -127,20 +122,11 @@ grid.appendChild(div)
 
 function move(r,c){
 
-if(gameOver) return
-
+if(gameOver)return
 
 if(
-
-layout[r][c]
-
-==="X"
-
-){
-
-return
-
-}
+layout[r][c]==="X"
+)return
 
 
 const distance=
@@ -155,28 +141,14 @@ Math.abs(
 c-current[1]
 )
 
-
-if(
-distance!==1
-){
-
-return
-
-}
+if(distance!==1)return
 
 
-const key=
-
-r+"-"+c
-
+const key=r+"-"+c
 
 if(
 visited.includes(key)
-){
-
-return
-
-}
+)return
 
 
 visited.push(key)
@@ -187,23 +159,16 @@ draw()
 
 
 if(
-
-layout[r][c]
-
-==="E"
-
+layout[r][c]==="E"
 ){
 
 gameOver=true
 
 clearInterval(timer)
 
-document
-.getElementById(
+document.getElementById(
 "message"
-)
-
-.innerText=
+).innerText=
 
 "🏆 Solved in "
 
@@ -223,9 +188,14 @@ seconds
 
 function resetGame(){
 
+clearInterval(timer)
+
 location.reload()
 
 }
 
 
+
 draw()
+
+startTimer()
