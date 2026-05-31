@@ -1,26 +1,59 @@
-body{
-  font-family:Arial;
-  text-align:center;
+body {
+
+font-family: Arial;
+
+text-align: center;
+
+background: #fafafa;
+
 }
-#grid{
-  display:grid;
-  grid-template-columns:repoeat(3,80px);
-  gap:8px;
-  justify-content:center;
-  margin:20px;
+
+#grid {
+
+display: grid;
+
+grid-template-columns: repeat(3,80px);
+
+gap: 8px;
+
+justify-content: center;
+
+margin: 20px auto;
+
+width: fit-content;
+
 }
-.cell{
-  width:80px;
-  height:80px;
-  border:2px solid black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:30px;
+
+.cell {
+
+width: 80px;
+
+height: 80px;
+
+border: 2px solid black;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-size: 30px;
+
+cursor: pointer;
+
+background: white;
+
 }
-.selected{
-  background:lightgreen;
+
+.selected {
+
+background: lightgreen;
+
 }
-.block{
-  background:black;
+
+.block {
+
+background: black;
+
 }
