@@ -1,4 +1,4 @@
-const layout=[
+const layout = [
 
 ["S","",""],
 
@@ -8,15 +8,12 @@ const layout=[
 
 ]
 
-const grid=
-
+const grid =
 document.getElementById(
-
 "grid"
-
 )
 
-let path=[]
+let current=[0,0]
 
 let seconds=0
 
@@ -25,78 +22,65 @@ setInterval(()=>{
 seconds++
 
 document
-
 .getElementById(
-
 "timer"
-
 )
 
 .innerText=
-
 seconds+"s"
 
 },1000)
+
 
 function draw(){
 
 grid.innerHTML=""
 
 layout.forEach(
-
 (row,r)=>{
 
 row.forEach(
-
 (cell,c)=>{
 
 const div=
-
-document
-
-.createElement(
-
+document.createElement(
 "div"
-
 )
 
 div.className=
-
 "cell"
 
 if(cell==="X")
+div.classList.add(
+"block"
+)
 
-div.classList
+if(
+r===current[0]
+&&
+c===current[1]
+)
 
-.add("block")
+div.classList.add(
+"selected"
+)
 
 div.innerText=
 
 cell==="S"
-
 ?"🟢"
 
 :
 
 cell==="E"
-
 ?"🔒"
 
 :""
 
 div.onclick=
+()=>move(r,c)
 
-()=>clickCell(
-
-r,c,div
-
-)
-
-grid.appendChild(
-
-div
-
-)
+grid.appendChild(div)
 
 })
 
@@ -104,60 +88,51 @@ div
 
 }
 
-function clickCell(
-
-r,c,div
-
-){
+function move(r,c){
 
 if(
-
-layout[r][c]
-
-==="X"
-
+layout[r][c]==="X"
 )
 
 return
 
-div.classList.toggle(
+const distance=
 
-"selected"
-
+Math.abs(
+r-current[0]
 )
 
-path.push([r,c])
++
 
-checkWin()
+Math.abs(
+c-current[1]
+)
 
-}
+if(distance!==1)
 
-function checkWin(){
-const last=
+return
 
-path[path.length-1]
+current=[r,c]
+
+draw()
 
 if(
-
-last[0]===2
-
-&&
-
-last[1]===2
-
+layout[r][c]
+==="E"
 ){
 
 document
-
 .getElementById(
-
 "message"
-
 )
 
 .innerText=
 
-"YOU WON"
+"YOU WON IN "
++
+seconds
++
+" seconds"
 
 }
 
